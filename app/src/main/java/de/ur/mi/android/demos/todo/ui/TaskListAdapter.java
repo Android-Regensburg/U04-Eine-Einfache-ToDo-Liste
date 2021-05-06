@@ -12,6 +12,9 @@ import androidx.annotation.Nullable;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import de.ur.mi.android.demos.todo.R;
 import de.ur.mi.android.demos.todo.tasks.Task;
@@ -31,8 +34,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
 
     private View inflateViewTask(int resource, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(resource, parent, false);
-        return view;
+        return inflater.inflate(resource, parent, false);
     }
 
     @NonNull
@@ -44,20 +46,32 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
             viewForTask = inflateViewTask(R.layout.task_list_item, parent);
         }
         if (task != null) {
-            if (task.isClosed()) {
+            if (task.isClosed() && viewForTask.getId() == R.id.list_item_default) {
                 viewForTask = inflateViewTask(R.layout.task_list_item_done, parent);
-            } else {
+            } else if (!task.isClosed() && viewForTask.getId() == R.id.list_item_done) {
                 viewForTask = inflateViewTask(R.layout.task_list_item, parent);
             }
-            TextView taskDescription = viewForTask.findViewById(R.id.list_item_description);
-            TextView taskCreationDate = viewForTask.findViewById(R.id.list_item_creationDate);
-            SimpleDateFormat sdf = new SimpleDateFormat("dd. MMMM");
-            String creationDateForUI = sdf.format(task.getCreationDate());
-            taskDescription.setText(task.getDescription());
-            taskCreationDate.setText(creationDateForUI);
+            bindTaskToView(task, viewForTask);
         }
-        viewForTask.setTag(R.string.task_id_tag_for_views, position);
         return viewForTask;
+    }
+
+    private void bindTaskToView(Task task, View view) {
+        TextView taskDescription = view.findViewById(R.id.list_item_description);
+        TextView taskCreationDate = view.findViewById(R.id.list_item_creationDate);
+        taskDescription.setText(task.getDescription());
+        taskCreationDate.setText(getFormattedDateForUI(task.getCreationDate()));
+    }
+
+    private String getFormattedDateForUI(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        Date now = new Date();
+        long timeDifferenceInMilliseconds = Math.abs(now.getTime() - date.getTime());
+        long timeDifferenceInDays = TimeUnit.DAYS.convert(timeDifferenceInMilliseconds, TimeUnit.MILLISECONDS);
+        if (timeDifferenceInDays > 0) {
+            sdf = new SimpleDateFormat("dd. MMMM", Locale.getDefault());
+        }
+        return sdf.format(date);
     }
 
     @Override

@@ -34,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void initUI() {
         setContentView(R.layout.activity_main);
+        initListView();
+        initInputElements();
+    }
+
+    private void initListView() {
         taskListAdapter = new TaskListAdapter(this);
         ListView taskList = findViewById(R.id.task_list);
         taskList.setAdapter(taskListAdapter);
@@ -44,12 +49,16 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    private void initInputElements() {
         taskDescriptionInput = findViewById(R.id.input_text);
         Button inputButton = findViewById(R.id.input_button);
         inputButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onInputButtonClicked();
+                String currentInput = taskDescriptionInput.getText().toString();
+                onUserInputClicked(currentInput);
             }
         });
     }
@@ -77,10 +86,9 @@ public class MainActivity extends AppCompatActivity {
         taskListAdapter.setTasks(tasks);
     }
 
-    private void onInputButtonClicked() {
-        String currentInput = taskDescriptionInput.getText().toString();
-        if (currentInput.length() > 0) {
-            addTask(currentInput);
+    private void onUserInputClicked(String input) {
+        if (input.length() > 0) {
+            addTask(input);
             taskDescriptionInput.setText("");
             taskDescriptionInput.requestFocus();
         }
