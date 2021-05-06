@@ -1,4 +1,4 @@
-package de.ur.mi.android.demos.simple_todo_list;
+package de.ur.mi.android.demos.todo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,5 +10,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    private void initUI(int numberOfBoxes) {
+
     }
 }

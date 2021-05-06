@@ -1,4 +1,4 @@
-package de.ur.mi.android.demos.simple_todo_list;
+package de.ur.mi.android.demos.todo;
 
 import android.content.Context;
 
