@@ -4,7 +4,7 @@
 
 In dieser Aufgabe implementieren Sie ein ToDo-Liste. NutzerInnen können neue Aufgaben zur Liste hinzufügen. Die Einträge der Liste werden stets so sortiert, dass neue Aufgaben an oberster Stelle angezeigt werden. Durch einen langen Klick auf einzelne Einträge können Aufgaben als *erledigt* markiert werden. Solche Aufgaben werden dann am Ende der Liste und mit einer angepassten Darstellung angezeigt. **Zur Umsetzung der Aufgabe verwenden Sie einen angepassten `ArrayAdapter` und ein selbst-erstelltes Layout für die Listeneinträge.**
 
-**Achtung:** Spätestens hier beginnen die Übungsaufgaben komplizierter zu werden. Nehmen Sie sich ausreichend Zeit und erarbeiten Sie Schritt für Schritt Ihre eigene Lösung. Versuchen Sie die Zusammenhänge und Hintergründe zu verstehen. An schwierigen Stellen bieten wir Ihnen im Übungsblatt zwei unterschiedlich komplexe Möglichkeiten an. Wenn Sie sich zuerst für den "einfacheren" Weg entscheiden, können Sie später versuchen den alternativen Vorschlag in Ihre funktionierende Lösung integrieren.
+**Achtung:** Spätestens hier beginnen die Übungsaufgaben komplizierter zu werden. Nehmen Sie sich ausreichend Zeit und erarbeiten Sie Schritt für Schritt Ihre eigene Lösung.** Versuchen Sie die Zusammenhänge und Hintergründe zu verstehen. An schwierigen Stellen bieten wir Ihnen im Übungsblatt zwei unterschiedlich komplexe Möglichkeiten an. Wenn Sie sich für den "einfacheren" Weg entscheiden, können Sie später gerne den alternativen Vorschlag in Ihre funktionierende Lösung integrieren.
 
 ### Vorgaben
 
@@ -50,6 +50,11 @@ Aus der Vorlesung kennen Sie bereits das [Material Design](https://material.io/d
 ### Umgang mit der internen Aufgabenliste
 
 Ein wesentliches Merkmale guter Software ist der sicherer Umgang mit der jeweiligen Datengrundlage. In unserer bisherigen Lösung missachten wir diesen Grundsatz, in dem wir dem UI-Adapter direkt Zugriff auf die interne Aufgabenliste ermöglichen. Dadurch nehmen wir in Kauf, dass die Inhalte dieser Liste nicht mehr nur innerhalb der Activity (bzw. dem `TaskManager`) manipuliert werden können. Der Adapter kann auf die referenzierten Task-Objekte der Liste zugreifen und direkt deren Zustand ändern. Eine einfache Lösung ist die Verwendung tiefer (*deep*) Kopien der Aufgabenliste. Statt dem Original erhält der Adapter nur eine Kopie der aktuellen Aufgabenliste. Jedes mal, wenn sich die interne Aufgabenliste ändert, übergeben wir eine neue Kopie an den Adapter. Sie können diese Mechanismus leicht in die bereits implementierte Lösung integrieren, in dem Sie an geeigneter Stelle die `copy`-Funktion der `Task`-Klasse verwenden.
+
+### RecyclerView
+
+*ListViews* und *ArrayAdapter* sind valide Möglichkeiten, um strukturierte Daten in Android-Apps anzuzeigen. Mittelfristig sollten für die meisten Anwendungsfälle aber [RecylerViews](https://developer.android.com/guide/topics/ui/layout/recyclerview) in Zusammenarbeit mit den entsprechenden [Adaptern](https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView.Adapter) verwendet werden. Auch für diese App können die entsprechenden Stellen mit relativ wenig Aufwand durch diese Recycler-Komponenten ersetzt werden.
+
 
 ## Screenshots der Anwendung
 ![Screenshots der ToDo-App](./docs/screenshot_possible_result.png )
