@@ -40,9 +40,14 @@ private View inflateViewTask(int resource, ViewGroup parent) {
 
 ## Mögliche Erweiterungen
 
-In unserem Lösungsvorschlag verwenden wir das [CardView](https://developer.android.com/jetpack/androidx/releases/cardview) als Grundlage für die einzelnen Einträge der Liste. Dafür Sie einige Änderungen am Code erforderlich, die auf der verlinkten Seite erklärt werden. Zusätzlich haben wir zwei verschieden Varianten des Layouts für die einzelnen Listeneinträge implementiert, um offene und erledigte Tasks auch optisch voneinander unterscheiden zu können. Lassen Sie bei der Gestaltung der Liste Ihrer Kreativität freien Lauf!
 
-Versuchen Sie durch die Übergabe von Kopien der Liste an den Adapter dafür zu sorgen, dass die Gefahr einer Änderung der Date
+### CardViews und Darstellung des Status einzelner Aufgaben
+
+Aus der Vorlesung kennen Sie bereits das [Material Design](https://material.io/develop/android) als zentrale Designsprache der Android-Plattform. Für die Darstellung von Listen heterogener Daten, wie in unserem Beispiel die ToDo-Einträge, werden [CardView](https://developer.android.com/jetpack/androidx/releases/cardview) empfohlen, die wir auch in unserem Lösungsvorschlag als Grundlage für die einzelnen Einträge der Liste verwenden. Dafür sind einige Änderungen am Code erforderlich, die auf der verlinkten Seite erklärt werden. Zusätzlich haben wir zwei verschieden Varianten des Layouts für die einzelnen Listeneinträge implementiert, um offene und erledigte Tasks auch optisch voneinander unterscheiden zu können. Lassen Sie bei der Gestaltung der Liste Ihrer Kreativität freien Lauf!
+
+### Umgang mit der internen Aufgabenliste
+
+Ein wesentliches Merkmale guter Software ist der sicherer Umgang mit der jeweiligen Datengrundlage. In unserer bisherigen Lösung missachten wir diesen Grundsatz, in dem wir dem UI-Adapter direkt Zugriff auf die interne Aufgabenliste ermöglichen. Dadurch nehmen wir in Kauf, dass die Inhalte dieser Liste nicht mehr nur innerhalb der Activity (bzw. dem `TaskManager`) manipuliert werden können. Der Adapter kann auf die referenzierten Task-Objekte der Liste zugreifen und direkt deren Zustand ändern. Eine einfache Lösung ist die Verwendung tiefer (*deep*) Kopien der Aufgabenliste. Statt dem Original erhält der Adapter nur eine Kopie der aktuellen Aufgabenliste. Jedes mal, wenn sich die interne Aufgabenliste ändert, übergeben wir eine neue Kopie an den Adapter. Sie können diese Mechanismus leicht in die bereits implementierte Lösung integrieren, in dem Sie an geeigneter Stelle die `copy`-Funktion der `Task`-Klasse verwenden.
 
 ## Screenshots der Anwendung
 ![Screenshots der ToDo-App](./docs/screenshot_possible_result.png )
