@@ -1,0 +1,5 @@
+# Ignore untracked local files from code branches
+.gradle
+.idea
+app/
+local.properties
