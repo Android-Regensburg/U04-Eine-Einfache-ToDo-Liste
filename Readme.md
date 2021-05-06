@@ -2,20 +2,43 @@
 
 ## Aufgabe
 
-..
+In dieser Aufgabe implementieren Sie ein ToDo-Liste. NutzerInnen können neue Aufgaben zur Liste hinzufügen. Die Einträge der Liste werden stets so sortiert, dass neue Aufgaben an oberster Stelle angezeigt werden. Durch einen langen Klick auf einzelne Einträge können Aufgaben als *erledigt* markiert werden. Solche Aufgaben werden dann am Ende der Liste und mit einer angepassten Darstellung angezeigt. **Zur Umsetzung der Aufgabe verwenden Sie einen angepassten `ArrayAdapter` und ein selbst-erstelltes Layout für die Listeneinträge.**
 
+### Vorgaben
 
+Im Startercode finden Sie ein rudimentäres Android-Projekt. Neben einem einfachen Layout (`activity_main.xml`) für die zentrale *Activity* der App ist dort auch eine `Task`-Klasse vorgegeben. Nutzen Sie diese zur logischen Repräsentation von Aufgaben innerhalb Ihrer Anwendung. Die Klasse verfügt  über Methoden zur (tiefen) Kopie einer Aufgabe und implementiert das `Comparable`-*Interface*, dass eine Sortierung mehrere Aufgaben nach den oben genannten Kriterien erlaubt. **Sie müssen diese Klasse zur Lösung der Aufgabe nicht verändern.**
 
 
 ## Vorgehen
 
-...
+Versuchen Sie bei der Lösung der Aufgabe bewusst eine Trennung zwischen der internen Repräsentation der Aufgaben und deren Darstellung im *User Interface* zu erreichen. Behalten Sie dabei diesen Grundsatz im Kopf: "Ihre App verwaltet intern eine Liste von Aufgaben. Über das *User Interface* können NutzerInnen Parameter für neue Aufgaben eingegeben und den Status existierender Aufgaben ändern. Diese Aktionen haben zuerst Auswirkungen auf die interne Liste. Der ListView zeigt stets den aktuellen Stand dieser internen Liste an, das *User Interface* verwaltet diese Liste aber nicht selbstständig."
 
-1. ...
+1. Laden Sie sich das Starterpaket herunter und verschaffen Sie sich einen Überblick über den vorgegebenen Code. Starten Sie das Projekt im Emulator, um sicherzustellen, dass Sie mit einer funktionierenden Version der App in die Implementierung starten.
+
+2. Erstellen Sie eine Klasse `TaskManager`, in der die interne Verwaltung der Aufgaben implementiert wird. Diese Klasse soll: a) eine Liste von Task-Objekten verwalten, b) eine öffentliche Methode zum Hinzufügen neuer Aufgaben auf Basis einer Aufgabenbeschreibung (`description`) anbieten, c) eine öffentliche Methode zum Umschalten des Status (*offen* zu *erledigt*) einer Aufgabe innerhalb der Liste anbieten und d) über eine öffentliche Methode eine (sortierte) Kopie der aktuell gespeicherten Aufgaben nach Außen geben. **Testen Sie die Funktion der Klasse, in der Sie diese in der `onCreate`-Methode Ihrer Activity initialisieren, programmatisch mit Inhalt befüllen und die Elemente der Listen-Kopie per Log-Befehl ausgeben.**
+
+3. Erstellen Sie ein eigenes Layout für die Listeneinträge. Erzeugen Sie dazu unter `layout` eine neue XML-Datei. Hier definieren Sie die Elemente, die später Teil eines einzelnen Eintrags des `ListView`  sein sollen. Im einfachsten Fall sorgen Sie dafür, dass über zwei `TextView`, die z.B. Kinder eines *Linear-Layouts* sein können, Platz für die Anzeige der Beschreibung und des Erstellungsdatums der einzelnen Aufgaben ist. Vergessen Sie nicht, alle Elemente, die später im QUuellcode mit Inhalten gefüllt werden sollen, mit eindeutigen IDs auszustatten.
+
+4. Erstellen Sie einen angepassten Adapter, der das vorhandene `ListView` (siehe `activity_main.xml`) mit den Einträgen des `TaskMangers` verbindet und dabei das eben erstellte Layout für die Darstellung der einzelnen Aufgaben innerhalb des `ListView` verwendet. Ihr Adapter erbt von `ArrayAdapter` (spezifizieren Sie den Typ der Objekte, die dieser Adapter verwendet über `extends ArrayAdapter<Task>`). Innerhalb des Adapters werden die aktuell im UI darzustellenden Aufgaben in einer passenden `ArrayList` verwaltet. Implementieren Sie eine öffentliche Methode, die es Ihnen erlaubt, diese Liste durch ein neues Set an Aufgaben zu ersetzen. Überschreiben Sie anschließende die beiden geerbten Methoden `getCount` (gibt die aktuelle Anzahl der Aufgaben in der `ArrayList` zurück) und `getView` (hier werden auf Anfrage des verknüpften `ListView` die UI-Elemente zur Darstellung der einzelnen Listenelemente erzeugt bzw. zurückgeben). In der `getView`-Methode erstellen Sie einen passenden View, in dem Sie das vorbereitet Layout (siehe Punkt 3) über Angabe des Dateinamen *inflaten* und anschließend die dortigen `TextView` mit den Werte eines der Task-Objekte befüllen. Über den Parameter `position` der `getView`-Methode teilt Ihnen das aufrufende `ListView` mit, welches Element (an welcher Position) ein `View` angefordert wird.
+
+5. Referenzieren Sie in der *Activity* das `ListView` und erstellen Sie den Adapter. Verbinden Sie beide Elemente und testen Sie Ihre Anwendung: 1) Fügen Sie neue Aufgaben zum Manager hinzu, 2) übergeben Sie dem Adapter eine Kopie der so veränderten Aufgabenliste und 3) informieren Sie das angeschlossen `ListView` über die Änderungen (Methode `notifyDataSetChanged` des Adapters).
+
+6. Verbinden Sie jetzt die losen Enden Ihre Anwendung: Nutzen Sie die vorgegebenen UI-Elemente um neue Aufgaben durch die NutzerInnen erstellen zu lassen. Behalten Sie dabei die bereits erprobte Reihenfolge ein: Die durch die NutzerInnen eingegebene Beschreibung wird an den `TaskManger` übergeben, der eine neue Aufgabe erstellt. Der Adapter erhält dann eine Kopie der veränderten Liste und informiert im Anschluss das `ListView`. Auf dem `ListView` registrieren Sie eine Listener, der es Ihnen erlaubt lange Klicks auf den Einträgen abzufangen (`setOnItemLongClickListener`). Als Reaktion auf diese *Events* ändern Sie den Status des angeklickten Elements und sorgen auch hier wieder dafür, das am Ende, über den Adapter, das `ListView` die Veränderungen des App-Zustands korrekt anzeigt.
+
+### Inflaten des Layouts
+
+Um aus der vorbereiteten XML-Datei im Code ein konkretes View-Objekt zu erzeugen, können Sie sich an diesem Code orientieren. Als `resource` wird dabei die ID des jeweiligen Layouts (XML-Datei) übergeben.
+
+```
+private View inflateViewTask(int resource, ViewGroup parent) {
+  LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+  return inflater.inflate(resource, parent, false);
+}
+```
 
 ## Mögliche Erweiterungen
 
-In dieser Aufgabe werden die Einträge der ListView im Code durch einfache Strings repräsentiert. Der Ansatz ist für diese Übungsaufgabe zwar akzeptabel (nachdem ein ListView Eintrag aus nur einem einzigen Text besteht), allerdings wäre **das Erstellen einer eigenen Task-Klasse**, welche dann einen einzelnen ListView-Eintrag repräsentiert, der **besserer Ansatz**.
+In unserem Lösungsvorschlag verwenden wir das [CardView](https://developer.android.com/jetpack/androidx/releases/cardview) als Grundlage für die einzelnen Einträge der Liste. Dafür Sie einige Änderungen am Code erforderlich, die auf der verlinkten Seite erklärt werden. Zusätzlich haben wir zwei verschieden Varianten des Layouts für die einzelnen Listeneinträge implementiert, um offene und erledigte Tasks auch optisch voneinander unterscheiden zu können. Lassen Sie bei der Gestaltung der Liste Ihrer Kreativität freien Lauf!
 
 ## Screenshots der Anwendung
 ![Screenshots der ToDo-App](./docs/screenshot_possible_result.png )
