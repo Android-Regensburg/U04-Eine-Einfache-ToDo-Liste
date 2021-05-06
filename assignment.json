@@ -1,6 +1,6 @@
 {
   "title": "Eine einfache ToDo-Liste",
-  "abstract": "",
+  "abstract": "In dieser Aufgabe implementieren Sie eine einfache ToDo-Liste. Die Darstellung der Einträge passen Sie dabei mit Hilfe eines einfachen ArrayAdapters und eines personalisierten View-Elements an.",
   "hasStarterCode": true,
   "hasSolutionCode": true,
   "solutionAvailableOn": "2021-05-13"
