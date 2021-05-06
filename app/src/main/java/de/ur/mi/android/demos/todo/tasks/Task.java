@@ -84,7 +84,7 @@ public class Task implements Comparable<Task> {
             return -1;
         }
         // Die beiden Aufgaben werden auf Basis des Erstellungsdatums sortiert (neuere vor älteren)
-        return this.createdAt.compareTo(otherTask.createdAt);
+        return -this.createdAt.compareTo(otherTask.createdAt);
     }
 
     public enum TaskState {
