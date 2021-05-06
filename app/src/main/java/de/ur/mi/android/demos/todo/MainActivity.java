@@ -1,51 +1,88 @@
 package de.ur.mi.android.demos.todo;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import de.ur.mi.android.demos.todo.tasks.Task;
-import de.ur.mi.android.demos.todo.tasks.TaskManager;
 import de.ur.mi.android.demos.todo.ui.TaskListAdapter;
-import de.ur.mi.android.demos.todo.ui.TaskListAdapterListener;
 
-public class MainActivity extends AppCompatActivity implements TaskListAdapterListener {
+public class MainActivity extends AppCompatActivity {
 
-    private TaskManager taskManager;
+    private ArrayList<Task> tasks;
     private TaskListAdapter taskListAdapter;
+    private EditText taskDescriptionInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initTasks();
         initUI();
-        testList();
     }
 
     private void initTasks() {
-        taskManager = new TaskManager();
+        tasks = new ArrayList<>();
     }
 
     private void initUI() {
         setContentView(R.layout.activity_main);
-        ListView taskList = findViewById(R.id.task_list);
         taskListAdapter = new TaskListAdapter(this);
-        taskListAdapter.setTaskListAdapterListener(this);
+        ListView taskList = findViewById(R.id.task_list);
         taskList.setAdapter(taskListAdapter);
+        taskList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                toggleTaskAtPosition(position);
+                return true;
+            }
+        });
+        taskDescriptionInput = findViewById(R.id.input_text);
+        Button inputButton = findViewById(R.id.input_button);
+        inputButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onInputButtonClicked();
+            }
+        });
     }
 
-    private void testList() {
-        taskManager.addTask("Java lernen");
-        taskManager.addTask("Android lernen");
-        taskManager.addTask("Stream schauen");
-        taskManager.toggleTaskStateAtPosition(0);
-        taskListAdapter.setTasks(taskManager.getCurrentTasks());
+    private void addTask(String description) {
+        Task taskToAdd = new Task(description);
+        tasks.add(taskToAdd);
+        updateTasksInAdapter();
     }
 
-    @Override
-    public void onTaskSelected(Task task) {
-        taskManager.toggleTaskStateForId(task.getID());
-        taskListAdapter.setTasks(taskManager.getCurrentTasks());
+    private void toggleTaskAtPosition(int position) {
+        Task taskToToggle = tasks.get(position);
+        if (taskToToggle != null) {
+            if (taskToToggle.isClosed()) {
+                taskToToggle.markAsOpen();
+            } else {
+                taskToToggle.markAsClosed();
+            }
+        }
+        updateTasksInAdapter();
+    }
+
+    private void updateTasksInAdapter() {
+        Collections.sort(tasks);
+        taskListAdapter.setTasks(tasks);
+    }
+
+    private void onInputButtonClicked() {
+        String currentInput = taskDescriptionInput.getText().toString();
+        if (currentInput.length() > 0) {
+            addTask(currentInput);
+            taskDescriptionInput.setText("");
+            taskDescriptionInput.requestFocus();
+        }
     }
 }
