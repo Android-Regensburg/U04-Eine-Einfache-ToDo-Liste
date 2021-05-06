@@ -4,7 +4,7 @@
 
 In dieser Aufgabe implementieren Sie ein ToDo-Liste. NutzerInnen können neue Aufgaben zur Liste hinzufügen. Die Einträge der Liste werden stets so sortiert, dass neue Aufgaben an oberster Stelle angezeigt werden. Durch einen langen Klick auf einzelne Einträge können Aufgaben als *erledigt* markiert werden. Solche Aufgaben werden dann am Ende der Liste und mit einer angepassten Darstellung angezeigt. **Zur Umsetzung der Aufgabe verwenden Sie einen angepassten `ArrayAdapter` und ein selbst-erstelltes Layout für die Listeneinträge.**
 
-**Achtung:** Spätestens hier beginnen die Übungsaufgaben komplizierter zu werden. Nehmen Sie sich ausreichend Zeit und erarbeiten Sie Schritt für Schritt Ihre eigene Lösung. Versuchen Sie die Zusammenhänge und Hintergründe zu verstehen. An schwierigen Stellen bieten wir Ihnen im Übungsblatt zwei unterschiedlich komplexe Möglichkeiten an. Wenn Sie sich für den "einfacheren" Weg entscheiden, können Sie später versuchen den alternativen Vorschlag in Ihre funktionierende Lösung integrieren.
+**Achtung:** Spätestens hier beginnen die Übungsaufgaben komplizierter zu werden. Nehmen Sie sich ausreichend Zeit und erarbeiten Sie Schritt für Schritt Ihre eigene Lösung. Versuchen Sie die Zusammenhänge und Hintergründe zu verstehen. An schwierigen Stellen bieten wir Ihnen im Übungsblatt zwei unterschiedlich komplexe Möglichkeiten an. Wenn Sie sich zuerst für den "einfacheren" Weg entscheiden, können Sie später versuchen den alternativen Vorschlag in Ihre funktionierende Lösung integrieren.
 
 ### Vorgaben
 
