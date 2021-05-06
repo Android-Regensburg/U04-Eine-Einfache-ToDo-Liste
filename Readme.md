@@ -57,4 +57,8 @@ Ein wesentliches Merkmale guter Software ist der sicherer Umgang mit der jeweili
 
 
 ## Screenshots der Anwendung
-![Screenshots der ToDo-App](./docs/screenshot_possible_result.png )
+![Screenshots der ToDo-App](./docs/screenshot_possible_results_simple.png)
+Einfache Lösung
+
+![Screenshots der ToDo-App](./docs/screenshot_possible_result.png)
+Lösung mit CardViews für die Listenelemente
