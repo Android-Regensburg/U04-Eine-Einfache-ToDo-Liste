@@ -77,11 +77,11 @@ public class Task implements Comparable<Task> {
     public int compareTo(Task otherTask) {
         if (this.isClosed() && !otherTask.isClosed()) {
             // Diese Aufgabe wird, weil bereits erledigt, nach der anderen sortiert
-            return -1;
+            return 1;
         }
         if (!this.isClosed() && otherTask.isClosed()) {
             // Diese Aufgabe wird, weil noch nicht erledigt, vor der anderen sortiert
-            return 1;
+            return -1;
         }
         // Die beiden Aufgaben werden auf Basis des Erstellungsdatums sortiert (neuere vor älteren)
         return this.createdAt.compareTo(otherTask.createdAt);
