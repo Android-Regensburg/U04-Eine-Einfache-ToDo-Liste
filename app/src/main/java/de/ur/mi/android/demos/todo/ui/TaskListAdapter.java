@@ -16,9 +16,10 @@ import java.util.ArrayList;
 import de.ur.mi.android.demos.todo.R;
 import de.ur.mi.android.demos.todo.tasks.Task;
 
-public class TaskListAdapter extends ArrayAdapter<Task> {
+public class TaskListAdapter extends ArrayAdapter<Task> implements View.OnLongClickListener {
 
     private ArrayList<Task> tasks;
+    private TaskListAdapterListener listener;
 
     public TaskListAdapter(@NonNull Context context) {
         super(context, android.R.layout.simple_list_item_1);
@@ -29,9 +30,15 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         this.notifyDataSetChanged();
     }
 
+    public void setTaskListAdapterListener(TaskListAdapterListener listener) {
+        this.listener = listener;
+    }
+
     private View inflateViewTask(int resource, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        return inflater.inflate(resource, parent, false);
+        View view = inflater.inflate(resource, parent, false);
+        view.setOnLongClickListener(this);
+        return view;
     }
 
     @NonNull
@@ -55,6 +62,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
             taskDescription.setText(task.getDescription());
             taskCreationDate.setText(creationDateForUI);
         }
+        viewForTask.setTag(R.string.task_id_tag_for_views, position);
         return viewForTask;
     }
 
@@ -64,5 +72,21 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
             return 0;
         }
         return tasks.size();
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        Object positionTag = v.getTag(R.string.task_id_tag_for_views);
+        if (positionTag != null) {
+            int position = (Integer) positionTag;
+            Task selectedTask = tasks.get(position);
+            if (selectedTask != null) {
+                if (listener != null) {
+                    listener.onTaskSelected(selectedTask);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

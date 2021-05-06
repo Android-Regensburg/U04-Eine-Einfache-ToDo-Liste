@@ -1,7 +1,5 @@
 package de.ur.mi.android.demos.todo.tasks;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -29,10 +27,22 @@ public class TaskManager {
         }
     }
 
+    public void toggleTaskStateForId(String id) {
+        for (Task task : tasks) {
+            if (task.getID().equals(id)) {
+                if (task.isClosed()) {
+                    task.markAsOpen();
+                } else {
+                    task.markAsClosed();
+                }
+                return;
+            }
+        }
+    }
+
     public ArrayList<Task> getCurrentTasks() {
         ArrayList<Task> currentTasks = new ArrayList<>();
         for (Task task : tasks) {
-            Log.d("ToDo-List", "Copying task with ID (" + task.getID() + ")");
             currentTasks.add(task.copy());
         }
         Collections.sort(currentTasks);
