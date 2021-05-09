@@ -1,51 +1,70 @@
 package de.ur.mi.android.demos.todo;
 
 import android.os.Bundle;
-import android.widget.ListView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import de.ur.mi.android.demos.todo.tasks.Task;
 import de.ur.mi.android.demos.todo.tasks.TaskManager;
-import de.ur.mi.android.demos.todo.ui.TaskListAdapter;
-import de.ur.mi.android.demos.todo.ui.TaskListAdapterListener;
+import de.ur.mi.android.demos.todo.ui.TaskListRecyclerAdapter;
 
-public class MainActivity extends AppCompatActivity implements TaskListAdapterListener {
+public class MainActivity extends AppCompatActivity implements TaskListRecyclerAdapter.TaskListAdapterListener, TaskManager.TaskManagerListener {
 
     private TaskManager taskManager;
-    private TaskListAdapter taskListAdapter;
+    private EditText taskInputElement;
+    private TaskListRecyclerAdapter taskListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initTasks();
         initUI();
-        testList();
     }
 
     private void initTasks() {
-        taskManager = new TaskManager();
+        taskManager = new TaskManager(this);
     }
 
     private void initUI() {
         setContentView(R.layout.activity_main);
-        ListView taskList = findViewById(R.id.task_list);
-        taskListAdapter = new TaskListAdapter(this);
-        taskListAdapter.setTaskListAdapterListener(this);
+        RecyclerView taskList = findViewById(R.id.task_list);
+        taskListAdapter = new TaskListRecyclerAdapter(this);
         taskList.setAdapter(taskListAdapter);
+        taskInputElement = findViewById(R.id.input_text);
+        Button button = findViewById(R.id.input_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addTaskFromUI();
+            }
+        });
     }
 
-    private void testList() {
-        taskManager.addTask("Java lernen");
-        taskManager.addTask("Android lernen");
-        taskManager.addTask("Stream schauen");
-        taskManager.toggleTaskStateAtPosition(0);
-        taskListAdapter.setTasks(taskManager.getCurrentTasks());
+    private void addTaskFromUI() {
+        String description = taskInputElement.getText().toString();
+        if (description.length() > 0) {
+            taskManager.addTask(description);
+        }
     }
 
     @Override
-    public void onTaskSelected(Task task) {
+    public void onItemSelected(Task task) {
         taskManager.toggleTaskStateForId(task.getID());
+    }
+
+    @Override
+    public void onTaskAdded(Task task) {
+        taskListAdapter.setTasks(taskManager.getCurrentTasks());
+        taskInputElement.setText("");
+        taskInputElement.requestFocus();
+    }
+
+    @Override
+    public void onTaskChanged(Task task) {
         taskListAdapter.setTasks(taskManager.getCurrentTasks());
     }
 }
