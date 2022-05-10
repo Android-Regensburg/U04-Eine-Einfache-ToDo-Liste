@@ -1,5 +1,6 @@
 package de.ur.mi.android.demos.todo;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -30,7 +31,7 @@ import de.ur.mi.android.demos.todo.ui.TaskListRecyclerAdapter;
  * Inhalte des TaskManagers verwendet.
  */
 
-public class MainActivity extends AppCompatActivity implements TaskListRecyclerAdapter.TaskListAdapterListener, TaskManager.TaskManagerListener {
+public class MainActivity extends Activity implements TaskListRecyclerAdapter.TaskListAdapterListener, TaskManager.TaskManagerListener {
 
     // Hier werden die eigentlichen Daten unserer Anwendung, die Aufgabenliste, verwaltet
     private TaskManager taskManager;
