@@ -3,7 +3,7 @@
     android:id="@+id/list_item_done"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorLightBackground"
+    android:background="@color/white"
     android:padding="10dp"
     android:weightSum="100">
 
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="70"
         android:padding="10dp"
-        android:textColor="@color/colorAccentAlternative"
+        android:textColor="@color/primary_light"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -25,7 +25,7 @@
         android:layout_weight="30"
         android:padding="10dp"
         android:textAlignment="textEnd"
-        android:textColor="@color/colorAccentAlternative"
+        android:textColor="@color/primary_light"
         android:textSize="14sp" />
 
 </LinearLayout>

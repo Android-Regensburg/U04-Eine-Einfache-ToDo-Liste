@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/app_title_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="20dp"
+        android:textSize="32sp"
+        android:textAlignment="center"
+        android:textColor="@color/primary"
+        android:text="@string/app_name"/>
+
     <LinearLayout
         android:id="@+id/input_elements"
         android:layout_width="match_parent"
@@ -13,7 +26,7 @@
         android:orientation="horizontal"
         android:padding="10dp"
         android:weightSum="100"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/app_title_label">
 
         <EditText
             android:id="@+id/input_text"
@@ -47,7 +60,7 @@
         android:padding="20dp"
         android:text="@string/app_description"
         android:textAlignment="center"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/grey"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent" />
 

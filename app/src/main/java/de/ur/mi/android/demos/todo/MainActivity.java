@@ -1,5 +1,6 @@
 package de.ur.mi.android.demos.todo;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,20 +18,18 @@ import de.ur.mi.android.demos.todo.ui.TaskListAdapter;
 
 
 /**
- * ToDo-Liste
- * <p>
  * Diese App erlaubt den Nutzer*innen das Zusammenstellen einer einfachen Aufgabenliste. Dazu können
  * neue Aufgaben erstellt und der Zustand (offen/geschlossen) existierende Aufgaben umgeschaltet werden.
  * In dieser Version der App werden die Einträge der Liste nicht gespeichert, d.h. nach Beenden der
  * App gehen alle erstellten Aufgaben verloren. Diese Variante stellt eine einfache Lösung für die
  * ursprüngliche Aufgabenstellung dar.
- * <p>
+ *
  * Diese Activity initialisiert die notwendigen Komponenten des User Interface (Eingabefelder und
  * ListView), fängt Eingabe-Events auf den Elementen und verarbeitet diese. In der Activity wird
  * auch die ArrayList mit Task-Objekten verwaltet, die den inhaltlichen Kern der Anwendung ausmacht.
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     // Liste mit den aktuelle in der App verwalteten Aufgaben
     private ArrayList<Task> tasks;
