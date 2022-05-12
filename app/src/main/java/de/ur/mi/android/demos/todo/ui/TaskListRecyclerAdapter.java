@@ -8,10 +8,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import de.ur.mi.android.demos.todo.R;
@@ -161,15 +163,16 @@ public class TaskListRecyclerAdapter extends RecyclerView.Adapter<TaskListViewHo
      * @param date Datum, das formatiert werden soll
      * @return Formatierte Stringrepräsentation des übergebenen Datums
      */
-    private String getFormattedDateForUI(Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
-        Date now = new Date();
-        long timeDifferenceInMilliseconds = Math.abs(now.getTime() - date.getTime());
+    private String getFormattedDateForUI(LocalDateTime date) {
+        // SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalDateTime now = LocalDateTime.now(TimeZone.getDefault().toZoneId());
+        long timeDifferenceInMilliseconds = Duration.between(date, now).abs().toMillis();
         long timeDifferenceInDays = TimeUnit.DAYS.convert(timeDifferenceInMilliseconds, TimeUnit.MILLISECONDS);
         if (timeDifferenceInDays > 0) {
-            sdf = new SimpleDateFormat("dd. MMMM", Locale.getDefault());
+            formatter = DateTimeFormatter.ofPattern("dd. MMMM");
         }
-        return sdf.format(date);
+        return formatter.format(date);
     }
 
     /**

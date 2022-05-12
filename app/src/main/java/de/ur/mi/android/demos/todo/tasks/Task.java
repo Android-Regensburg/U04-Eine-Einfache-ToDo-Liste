@@ -1,6 +1,8 @@
 package de.ur.mi.android.demos.todo.tasks;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.TimeZone;
 import java.util.UUID;
 
 /**
@@ -23,17 +25,17 @@ public class Task implements Comparable<Task> {
 
     private final UUID id; // eindeutige ID des Tasks
     private final String description; // Beschreibung der Aufgabe (von Nutzenden eingegeben)
-    private final Date createdAt; // Erstellungsdatum
+    private final LocalDateTime createdAt; // Erstellungsdatum
     private TaskState currentState; // Aktueller Zustand - offen oder erledigt
 
     public Task(String description) {
         this.id = UUID.randomUUID();
-        this.createdAt = new Date();
+        this.createdAt = LocalDateTime.now(TimeZone.getDefault().toZoneId());
         this.currentState = TaskState.OPEN;
         this.description = description;
     }
 
-    private Task(String description, UUID id, Date createdAt, TaskState currentState) {
+    private Task(String description, UUID id, LocalDateTime createdAt, TaskState currentState) {
         this.id = id;
         this.createdAt = createdAt;
         this.currentState = currentState;
@@ -48,7 +50,7 @@ public class Task implements Comparable<Task> {
         return description;
     }
 
-    public Date getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return getCreationDateCopy();
     }
 
@@ -65,12 +67,12 @@ public class Task implements Comparable<Task> {
     }
 
     public Task copy() {
-        Date creationDateFromOriginal = getCreationDateCopy();
+        LocalDateTime creationDateFromOriginal = getCreationDateCopy();
         return new Task(description, id, creationDateFromOriginal, currentState);
     }
 
-    private Date getCreationDateCopy() {
-        return new Date(createdAt.getTime());
+    private LocalDateTime getCreationDateCopy() {
+        return LocalDateTime.from(createdAt);
     }
 
     @Override
