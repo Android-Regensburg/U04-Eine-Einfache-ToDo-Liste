@@ -18,9 +18,9 @@ import de.ur.mi.android.demos.todo.ui.TaskListAdapter;
 
 
 /**
- * Diese App erlaubt den Nutzer*innen das Zusammenstellen einer einfachen Aufgabenliste. Dazu können
+ * Diese App erlaubt den Nutzer*innen das Erstellen einer einfachen Aufgabenliste. Dazu können
  * neue Aufgaben erstellt und der Zustand (offen/geschlossen) existierende Aufgaben umgeschaltet werden.
- * In dieser Version der App werden die Einträge der Liste nicht gespeichert, d.h. nach Beenden der
+ * In dieser Version der App werden die Einträge der Liste nicht dauerhaft gespeichert, d.h. nach Beenden der
  * App gehen alle erstellten Aufgaben verloren. Diese Variante stellt eine einfache Lösung für die
  * ursprüngliche Aufgabenstellung dar.
  *
@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * Initialisiert eine neue ArrayList zum Speichern der Aufgaben
+     * Initialisiert eine neue ArrayList zum Speichern der Aufgaben.
      */
     private void initTasks() {
         tasks = new ArrayList<>();

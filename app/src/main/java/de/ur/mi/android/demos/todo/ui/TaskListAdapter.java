@@ -53,7 +53,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         this.tasks = tasks;
         // Wenn sich die Datenbasis im Adapter ändert, informiert dieser den angeschlossenen ListView über die Änderungen
         // Dadurch wird automatisch der Prozess gestartet, in dem das ListView einen neuen Satz an Views zur Darstellung
-        // der jetzt aktualisierten Inhalten vom Adapter anfordert
+        // der jetzt aktualisierten Inhalten vom Adapter anfordert.
         this.notifyDataSetChanged();
     }
 
@@ -108,7 +108,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
      * Überträgt die Eigenschaften der übergebenen Aufgabe in den View
      *
      * @param task Die Aufgabem deren Inhalte im View eingetragen werden sollen
-     * @param view Ein View zur Darstellung der Aufgabe (muss auf Basis der XML-Dateien task_list_item bzw. task_list_item_done erstellt worden sein)
+     * @param view Ein View zur Darstellung der Aufgabe (muss auf Basis der XML-Dateien task_list_item.xml bzw. task_list_item_done.xml erstellt worden sein)
      */
     private void bindTaskToView(Task task, View view) {
         // Referenzieren der einzelnen TextViews im übergebenen View

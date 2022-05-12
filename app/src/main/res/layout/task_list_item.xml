@@ -24,7 +24,7 @@
         android:layout_weight="30"
         android:padding="10dp"
         android:textAlignment="textEnd"
-        android:textColor="@color/accent"
+        android:textColor="@color/grey"
         android:textSize="14sp" />
 
 </LinearLayout>
