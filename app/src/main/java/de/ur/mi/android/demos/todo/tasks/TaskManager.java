@@ -17,6 +17,8 @@ public class TaskManager {
 
     /**
      * Erzeugt einen neuen TaskManager
+     * Der Listener ist bei uns die MainActivity, die das TaskManagerListener-Interface
+     * implementiert.
      *
      * @param listener Observer/Listener, der über Änderungen an der Aufgabenliste informiert werden soll
      */
@@ -78,11 +80,11 @@ public class TaskManager {
     }
 
     /**
-     * Gibt eine Kopier der aktuellen Aufgaben zurück, die von diesem TaskManger verwaltet werden
+     * Gibt eine Kopie der aktuellen Aufgaben zurück, die von diesem TaskManger verwaltet werden
      *
      * @return Sortierte ArrayList mit Kopien der aktuellen Aufgabe
      */
-    public ArrayList<Task> getCurrentTasks() {
+    public ArrayList<Task> getDeepCopyOfCurrentTasks() {
         // Erstellen einer neuen, leeren Liste für die kopierten Aufgaben
         ArrayList<Task> currentTasks = new ArrayList<>();
         // Iteration über die Liste der aktuellen Aufgaben

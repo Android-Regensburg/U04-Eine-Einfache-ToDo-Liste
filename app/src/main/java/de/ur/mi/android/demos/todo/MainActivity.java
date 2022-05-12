@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import de.ur.mi.android.demos.todo.tasks.Task;
@@ -15,13 +14,13 @@ import de.ur.mi.android.demos.todo.ui.TaskListRecyclerAdapter;
 
 /**
  * ToDo-Liste
- * <p>
+ *
  * Diese App erlaubt den Nutzer*innen das Zusammenstellen einer einfachen Aufgabenliste. Dazu können
  * neue Aufgaben erstellt und der Zustand (offen/geschlossen) existierende Aufgaben umgeschaltet werden.
  * In dieser Version der App werden die Einträge der Liste nicht gespeichert, d.h. nach Beenden der
  * App gehen alle erstellten Aufgaben verloren. Diese Variante stellt eine einfache fortgeschrittene Lösung
  * für die ursprüngliche Aufgabenstellung dar.
- * <p>
+ *
  * Diese Activity initialisiert die notwendigen Komponenten des User Interface. Die Aufgaben werden
  * in einer Instanz der TaskManger-Klasse verwaltet. Für deren Darstellung wird ein RecyclerView
  * verwendet, der über einen entsprechenden Adapter mit der Datenstruktur verbunden wird. Der Adapter
@@ -33,7 +32,7 @@ import de.ur.mi.android.demos.todo.ui.TaskListRecyclerAdapter;
 
 public class MainActivity extends Activity implements TaskListRecyclerAdapter.TaskListAdapterListener, TaskManager.TaskManagerListener {
 
-    // Hier werden die eigentlichen Daten unserer Anwendung, die Aufgabenliste, verwaltet
+    // In diesem Objekt werden die eigentlichen Daten unserer Anwendung, ergo die Aufgabenliste, verwaltet
     private TaskManager taskManager;
     // Eingabefeld für den Beschreibungstext neuer Aufgaben
     private EditText taskInputElement;
@@ -52,6 +51,8 @@ public class MainActivity extends Activity implements TaskListRecyclerAdapter.Ta
      */
     private void initTasks() {
         // Änderungen am Zustand des TaskManagers werden über eine Listener-Schnittstelle an diese Activity weitergeben
+        // Ändert sich also die Liste im TaskManager oder wird der Status eines Tasks geändert, wird
+        // die onTaskListUpdated-Methode dieser Activity aufgerufen.
         taskManager = new TaskManager(this);
     }
 
@@ -61,6 +62,8 @@ public class MainActivity extends Activity implements TaskListRecyclerAdapter.Ta
     private void initUI() {
         setContentView(R.layout.activity_main);
         RecyclerView taskList = findViewById(R.id.task_list);
+        // Die Activity registriert sich selbst als Listener auf dem Adapter, wird ein Element
+        // im RecylerView lange geklickt, wird so die onItemSelected-Methode dieser Activity aufgerufen.
         taskListAdapter = new TaskListRecyclerAdapter(this);
         taskList.setAdapter(taskListAdapter);
         taskInputElement = findViewById(R.id.input_text);
@@ -74,14 +77,15 @@ public class MainActivity extends Activity implements TaskListRecyclerAdapter.Ta
     }
 
     /**
-     * Prüft, ob sich der aktuelle Inhalt des TextViews als Beschreibung einer neuen Aufgabe eignet und, falls passend,
-     * erstellt auf dessen Basis eine neue Aufgabe im TaskManager
+     * Prüft, ob der aktuelle Inhalt des EditTexts leer ist, falls nein, wird er als Beschreibung eines
+     * neuen Tasks verwendet und dessen Basis eine neue Aufgabe im TaskManager erstellt.
      */
     private void addTaskFromUI() {
         String description = taskInputElement.getText().toString();
         if (description.length() > 0) {
             taskManager.addTask(description);
             taskInputElement.setText("");
+            // versucht das Eingabefeld zu fokussieren, so dass direkt die nächste Aufgabe eingegeben werden kann.
             taskInputElement.requestFocus();
         }
     }
@@ -89,7 +93,7 @@ public class MainActivity extends Activity implements TaskListRecyclerAdapter.Ta
     /**
      * Wird aufgerufen, wenn im RecyclerView einer der Listeneinträge ausgewählt wurde
      *
-     * @param task
+     * @param task Task, der mit dem Listenelement korrespondiert, das lange gedrückt wurde.
      */
     @Override
     public void onItemSelected(Task task) {
@@ -99,9 +103,12 @@ public class MainActivity extends Activity implements TaskListRecyclerAdapter.Ta
     /**
      * Wird aufgerufen, wenn neue Inhalte zum TaskManager hinzugefügt wurden oder der Status existierender
      * Aufgaben angepasst wurde
+     * Dann wird der Adapter über diese Änderung informiert und die angezeigte Liste angepasst.
+     * Dafür wird eine tiefe Kopie der Liste verwendet, um UI-Repräsentation und interne Datenstruktur
+     * strikt zu trennen.
      */
     @Override
     public void onTaskListUpdated() {
-        taskListAdapter.setTasks(taskManager.getCurrentTasks());
+        taskListAdapter.setTasks(taskManager.getDeepCopyOfCurrentTasks());
     }
 }

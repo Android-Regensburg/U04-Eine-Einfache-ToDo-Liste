@@ -20,6 +20,9 @@ public class TaskListViewHolder extends RecyclerView.ViewHolder {
      * Wird im TaskListRecyclerAdapter aufgerufen, wenn ein neuer View für die Darstellung eines Eintrags
      * benötigt wird.
      *
+     * Der Listener ist bei uns der RecyclerViewAdapter, der das TaskViewHolderListener-
+     * Interface implementiert.
+     *
      * @param itemView View für eigentlichen Eintrag innerhalb des RecyclerViews
      * @param listener Eigene Ergänzung: Listener, der über Interaktion der Nutzer*innen mit diesem ViewHolder informiert werden soll
      */
@@ -27,9 +30,9 @@ public class TaskListViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         this.viewHolderListener = listener;
         taskView = itemView;
-        // Beim Erstellen des neuen ViewHolders registrieren wird zusätzlich einen LongClick-Listener. Die Interaktion
-        // fangen wir im Holder ab und geben die Information, dass dieser View angeklickt wurde an den an diesen Konstruktor
-        // übergebenen Listener (TaskListViewHolderListener) weiter
+        // Beim Erstellen des neuen ViewHolders registrieren wird zusätzlich einen LongClick-Listener.
+        // Die Interaktion fangen wir im Holder ab und geben die Information, dass dieser View
+        // angeklickt wurde an den im Konstruktor übergebenen Listener (TaskListViewHolderListener) weiter.
         taskView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {

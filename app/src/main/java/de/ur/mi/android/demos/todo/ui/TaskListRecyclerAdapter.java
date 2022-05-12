@@ -22,13 +22,14 @@ import de.ur.mi.android.demos.todo.ui.viewholder.TaskListViewHolder;
  * Dieser Adapter verbindet eine ArrayList von Task-Objekten mit einem RecyclerView im UserInterface. Der
  * Adapter stellt dem RecyclerView die notwendigen Views zu Darstellung der einzelnen Aufgaben bereit. Dabei
  * unterscheidet der Adpater zwischen offen und bereits erledigten Aufgaben und gibt je nach Zustand der
- * Aufgabe andere Views an das ListView weiter. Dadurch werden die beiden "Typen" von Aufgaben im
- * User Interface auf unterschiedliche Art und Weise dargestellt.
+ * Aufgabe andere Views an das RecyclerView (die Taskliste im UI) weiter. Dadurch werden die beiden
+ * "Typen" von Aufgaben im User Interface auf unterschiedliche Art dargestellt.
  */
 
 public class TaskListRecyclerAdapter extends RecyclerView.Adapter<TaskListViewHolder> implements TaskListViewHolder.TaskListViewHolderListener {
 
-    /* Konstanten, die unterschiedliche Typen von Einträgen des angeschlossenen RecyclerViews identifizieren.
+    /*
+     * Konstanten, die unterschiedliche Typen von Einträgen des angeschlossenen RecyclerViews identifizieren.
      * Das ist dann notwendig, wenn nicht alle Einträge einer Liste auf die gleiche Art und Weise dargestellt werden sollen,
      * in unserem Fall können wir so zwischen offenen und geschlossenen Aufgaben unterscheiden. In einer überschriebenen Methode
      * des Adapters werden den Task-Objekten jeweils einer dieser Typen zugeordnet. Diese "ID" wird dann in anderen Methoden des Adapters
@@ -71,12 +72,12 @@ public class TaskListRecyclerAdapter extends RecyclerView.Adapter<TaskListViewHo
     }
 
     /**
-     * Gibt den Typ von View zurück, der für die Darstellung der Aufgabe an der übergebenen Listenposition verwendet werden soll. Diese
-     * Typen-Beschreibung wird dann an anderer Stelle verwendet, um das passende View zur Darstellung zu erstellen.
-     * Die möglichen Typen werden über int-Werte unterschieden, zur besseren lesbarkeit nutzen wir Konstanten, die zu Beginn der Adaoterklasse
-     * definiert wurden.
+     * Gibt den Typ von View zurück, der für die Darstellung der Aufgabe an der übergebenen Listenposition verwendet
+     * werden soll. Diese Typen-Beschreibung wird dann an anderer Stelle verwendet, um das passende View
+     * zur Darstellung zu erstellen. Die möglichen Typen werden über int-Werte unterschieden, zur besseren
+     * Lesbarkeit nutzen wir die Konstanten, die zu Beginn der Adapterklasse definiert wurden.
      *
-     * @param position
+     * @param position Position des Elements in der Liste, dessen Typ abgefragt werden soll.
      * @return
      */
     @Override
@@ -91,7 +92,7 @@ public class TaskListRecyclerAdapter extends RecyclerView.Adapter<TaskListViewHo
     /**
      * Wird aufgerufen, wenn ein neuer ViewHolder benötigt wird
      *
-     * @param parent
+     * @param parent Elternelement unseres Layouts, hier der RecyclerView.
      * @param viewType Anzeige-Typ, der benötigt wird (wird automatisch über Aufruf der getItemViewType-Methode ausgewählt)
      * @return Der erstellte ViewHOlder
      */
@@ -134,28 +135,28 @@ public class TaskListRecyclerAdapter extends RecyclerView.Adapter<TaskListViewHo
      * Erzeugt einen ViewHolder für eine Aufgabe des übergebenen Typs. Hier wird nur der leere View erzeugt,
      * es werden noch keine Inhalte einer konkreten Aufgaben in dem View eingetragen.
      *
-     * @param parent   Das Elternelement im UI, zu dem der neue View hinzugefügt werden kann, z.B. das RecyclerView selber
+     * @param parent   Das Elternelement im UI, zu dem der neue View hinzugefügt werden kann, z.B. das RecyclerView
      * @param viewType Typ des Views, das für die Darstellung dieser Aufgabe verwendet werden soll (siehe: getItemViewType)
      * @return Der erstellte VieHolder
      */
     private TaskListViewHolder createViewHolderForType(ViewGroup parent, int viewType) {
         View v;
         if (viewType == VIEW_TYPE_FOR_OPEN_ITEMS) {
-            // Erstellen des View für offene Aufgaben
+            // Erstellen des View für offene Aufgaben mittels LayoutInflater
             v = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_list_item, parent, false);
         } else {
             // Alternativ: Erstellen des View für abgeschlossene Aufgaben
             v = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_list_item_done, parent, false);
         }
-        // Erstellen des ViewHolders auf Basis der oben ausgewählten View
+        // Erstellen des ViewHolders auf Basis des oben ausgewählten und erstellten Views
         TaskListViewHolder vh = new TaskListViewHolder(v, this);
         return vh;
     }
 
     /**
      * Wandelt das übergeben Datum in einen sauber formatiertern String zur Darstellung im UI um.
-     * Datumsangaben werden in der Regel im Format Tag. Monat zurückgegeben. Liegt das übergebene Datum
-     * weniger als 24h zurück, wird statt dessen das Format  Stunden:Minuten verwendet.
+     * Datumsangaben werden in der Regel im Format [Tag]. [Monat] zurückgegeben. Liegt das übergebene Datum
+     * weniger als 24h zurück, wird stattdessen das Format  [Stunden]:[Minuten] verwendet.
      *
      * @param date Datum, das formatiert werden soll
      * @return Formatierte Stringrepräsentation des übergebenen Datums
