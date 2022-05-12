@@ -3,9 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Uni_Material/6_SS22/Android Tutor/Uebungsaufgaben/Ueberarbeitung ToDoListe/U04-Eine-Einfache-ToDo-Liste/app/src/main/res/layout/activity_main.xml" value="0.4316123188405797" />
-        <entry key="..\:/Uni_Material/6_SS22/Android Tutor/Uebungsaufgaben/Ueberarbeitung ToDoListe/U04-Eine-Einfache-ToDo-Liste/app/src/main/res/layout/task_list_item.xml" value="0.3109375" />
-        <entry key="..\:/Uni_Material/6_SS22/Android Tutor/Uebungsaufgaben/Ueberarbeitung ToDoListe/U04-Eine-Einfache-ToDo-Liste/app/src/main/res/layout/task_list_item_done.xml" value="0.3109375" />
+        <entry key="..\:/Uni_Material/6_SS22/Android Tutor/Uebungsaufgaben/Ueberarbeitung ToDoListe/U04-Eine-Einfache-ToDo-Liste/app/src/main/res/layout/activity_main.xml" value="0.3109375" />
       </map>
     </option>
   </component>
