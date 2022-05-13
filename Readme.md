@@ -34,29 +34,37 @@ Laden Sie sich das Starterpaket herunter, das Sie links auf dieser Seite finden.
 
 Im ersten Schritt kümmern Sie sich darum, dass Ihre App über eine Möglichkeit verfügt, die Liste der relevanten Tasks intern zu verwalten. Für diesen Teil der Aufgabe gibt es *mindestens* zwei mögliche Ansätze, die das Konzept der klaren Trennung zwischen UI und Datengrundlagen unterschiedlich stark umsetzen.
    * **Im einfachen Fall** verfügt die zentrale Activity der App über eine ArrayList, in der beliebig viele Aufgaben (`Task`-Objekte) gespeichert werden können. Ergänzen Sie zwei nicht-öffentliche Methoden über die neue Aufgaben (auf Basis eines übergebenen Beschreibungstexts) hinzugefügt und der Status (*offen* bzw. *erledigt*) bestehender Aufgaben angepasst werden können.
-   * **Alternativ** können Sie für die interne Verwaltung der Aufgabenliste auch eine vollständig separate Komponente verwenden. Erstellen Sie dazu eine Klasse `TaskManager`, in der die interne Verwaltung der Aufgaben implementiert wird. Diese Klasse soll: a) eine Liste von Task-Objekten verwalten, b) eine öffentliche Methode zum Hinzufügen neuer Aufgaben auf Basis einer Aufgabenbeschreibung (`description`) anbieten, c) eine öffentliche Methode zum Umschalten des Status (*offen* zu *erledigt*) einer Aufgabe innerhalb der Liste anbieten und d) über eine öffentliche Methode eine sortierte Kopie der aktuell gespeicherten Aufgaben nach Außen geben. **Testen Sie die Funktion der Klasse, in der Sie diese in der `onCreate`-Methode Ihrer Activity initialisieren, programmatisch mit Inhalt befüllen und die Elemente der Listen-Kopie per Log-Befehl ausgeben.**
+   * **Alternativ** können Sie für die interne Verwaltung der Aufgabenliste auch eine vollständig separate Komponente verwenden. Erstellen Sie dazu eine Klasse `TaskManager`, in der die interne Verwaltung der Aufgaben implementiert wird. Diese Klasse soll: a) eine Liste von Task-Objekten verwalten, b) eine öffentliche Methode zum Hinzufügen neuer Aufgaben auf Basis einer Aufgabenbeschreibung (`description`) anbieten, c) eine öffentliche Methode zum Umschalten des Status (*offen* zu *erledigt*) einer Aufgabe innerhalb der Liste anbieten und d) über eine öffentliche Methode eine sortierte Kopie der aktuell gespeicherten Aufgaben nach Außen geben.
+   
+Testen Sie die Funktion dieser Komponente, indem Sie die ArrayList oder den Manager in der `onCreate`-Methode Ihrer Activity initialisieren, programmatisch mit Inhalt befüllen und die gespeicherten Elemente per `Log.d`-Befehl ausgeben.
 
-  **Zwischenziel:** Die App hat eine Möglichkeit, eine Liste von Task-Objekten zu verwalten. Es existieren Methoden zum Hinzufügen von Tasks und zum Verändern des Status der Tasks. Die Anwendung lässt sich weiterhin fehlerfrei ausführen.
+**Zwischenziel:** Die App hat eine Möglichkeit, eine Liste von Task-Objekten zu verwalten. Es existieren Methoden zum Hinzufügen von Tasks und zum Verändern des Status der Tasks. Beim Start der Anwendung werden die programmatisch hinzugefügten Listenelemente im Logcat-Fenster ausgegeben.
 
 ### Schritt 2: Ein Layout für Listeneinträge
 
 Erstellen Sie ein eigenes Layout für die Listeneinträge. Erzeugen Sie dazu unter `layout` im `res`-Ordner eine neue XML-Datei. Hier definieren Sie die UI-Elemente (Views), die später Teil eines einzelnen Eintrags des `ListView`  sein sollen. Im einfachsten Fall sorgen Sie dafür, dass über zwei *TextViews*, die z.B. Kinder eines *Linear-Layouts* sein können, Platz für die Anzeige der Beschreibung und des Erstellungsdatums der einzelnen Aufgaben ist. Vergessen Sie nicht, alle Elemente, die später im Quellcode mit Inhalten gefüllt werden sollen, mit eindeutigen IDs auszustatten.
 
-**Zwischenziel:** Es gibt ein XML-Layout, das beschreibt wie ein Listeneintrag aussieht.
+Befüllen Sie die Elemente zum Testen mit Texten. Überprüfen Sie in der Vorschau der *Split* oder *Design* Ansicht, ob die Layout-Bausteine korrekt angezeigt werden. (Die Texte können Sie danach wieder entfernen.)
+
+**Zwischenziel:** Es gibt ein XML-Layout, das beschreibt wie ein Listeneintrag aussieht. In der Vorschau sind die Layout-Bausteine korrekt angeordnet und könnten einen Listeneintrag repräsentieren.
 
 ### Schritt 3: Ein Layout für erledigte Listeneinträge
 
 Erstellen Sie ein weiteres Layout für erledigte Tasks. Kopieren und modifizieren Sie dafür das erstellte Layout für Listeneinträge. Im einfachsten Fall ändern Sie dazu einfach die Farben. Z.B. könnte eine angepasste Schriftfarbe und/oder eine veränderte Hintergrundfarbe über den Status des Tasks Aufschluss bieten.
 
-**Zwischenziel:** Es gibt ein XML-Layout für erledigte Tasks.
+Befüllen Sie die Elemente zum Testen mit Texten. Überprüfen Sie in der Vorschau der *Split* oder *Design* Ansicht, ob die Layout-Bausteine korrekt angezeigt werden. (Die Texte können Sie danach wieder entfernen.)
+
+**Zwischenziel:** Es gibt ein XML-Layout für erledigte Tasks. In der Vorschau sind die Layout-Bausteine korrekt angeordnet und könnten einen abgeschlossenen Listeneintrag repräsentieren.
 
 ### Schritt 4: Adapter für Liste
 
-Erstellen Sie eine Klasse für einen angepassten Adapter, der das vorhandene `ListView` (siehe `activity_main.xml`) mit den Einträgen der vorbereiteten ArrayList oder den vom `TaskManger` verwalteten Inhalten verbindet und dabei das Layout für die Darstellung der einzelnen Aufgaben innerhalb des `ListView` verwendet. Ihr Adapter erbt von `ArrayAdapter` (spezifizieren Sie den Typ der Objekte, die dieser Adapter verwendet über `extends ArrayAdapter<Task>`).
+Erstellen Sie eine Klasse für einen angepassten Adapter, der das vorhandene `ListView` (siehe `activity_main.xml`) mit den Einträgen der vorbereiteten ArrayList oder den vom `TaskManager` verwalteten Inhalten verbindet und dabei das Layout für die Darstellung der einzelnen Aufgaben innerhalb des `ListView` verwendet. Ihr Adapter erbt von `ArrayAdapter` (spezifizieren Sie den Typ der Objekte, die dieser Adapter verwendet über `extends ArrayAdapter<Task>`).
 
-Innerhalb des Adapters werden die aktuell im UI darzustellenden Aufgaben in einer `ArrayList` verwaltet. Implementieren Sie eine öffentliche Methode, die es Ihnen erlaubt, diese durch eine neue Liste an Aufgaben zu ersetzen. Überschreiben Sie anschließende die beiden geerbten Methoden `getCount` (gibt die aktuelle Anzahl der Aufgaben in der `ArrayList` zurück) und `getView` (hier werden auf Anfrage des verknüpften `ListView` die UI-Elemente zur Darstellung der einzelnen Listenelemente erzeugt bzw. zurückgeben). In der `getView`-Methode erstellen Sie einen passenden View, indem Sie das vorbereitet Layout (siehe Punkt 2) über Angabe des Dateinamen *inflaten* (siehe Hinweise) und anschließend die dortigen `TextView`-Elemente mit den Werte eines der *Task*-Objekte befüllen. Über den Parameter `position` der `getView`-Methode teilt Ihnen das aufrufende `ListView` mit, welches Element der UI-Liste (an welcher Position) ein `View` angefordert wird.
+Innerhalb des Adapters werden die aktuell im UI darzustellenden Aufgaben in einer `ArrayList` verwaltet. Implementieren Sie eine öffentliche Methode, die es Ihnen erlaubt, diese durch eine neue Liste an Aufgaben zu ersetzen. Überschreiben Sie anschließende die beiden geerbten Methoden `getCount` (gibt die aktuelle Anzahl der Aufgaben in der `ArrayList` zurück) und `getView` (hier werden auf Anfrage des verknüpften `ListView` die UI-Elemente zur Darstellung der einzelnen Listenelemente erzeugt bzw. zurückgeben). In der `getView`-Methode erstellen Sie einen passenden View, indem Sie das vorbereitet Layout (siehe Schritt 2) über Angabe von `R.layout.<layoutname.xml>` *inflaten* (siehe Hinweise) und anschließend die dortigen `TextView`-Elemente mit den Werte eines der *Task*-Objekte befüllen. Über den Parameter `position` der `getView`-Methode teilt Ihnen das aufrufende `ListView` mit, welches Element der UI-Liste (an welcher Position) ein `View` angefordert wird.
 
-**Zwischenziel:** Es gibt eine Klasse für einen Adapter, der die interne Liste von Aufgaben mit dem UI-`ListView` verbindet. Dieser hat überschriebene Methoden `getCount` und `getView` und zusätzlich eine öffentliche Methode, um die Liste der Aufgaben im Adapter zu ersetzen. Die Anwendung lässt sich immer noch fehlerfrei starten.
+Erzeugen Sie in der `onCreate`-Methode eine Instanz des Adapters. Erstellen Sie außerdem programmatisch eine `ArrayList`, die Sie programmatisch mit Inhalt befüllen. Übergeben Sie diese ArrayList an den Adapter. Loggen Sie die Rückgabe der `getCount`-Methode und den Inhalt der `ArrayList` im Adapter mit `Log.d`.
+
+**Zwischenziel:** Es gibt eine Klasse für einen Adapter, der die interne Liste von Aufgaben mit dem UI-`ListView` verbindet. Dieser hat überschriebene Methoden `getCount` und `getView` und zusätzlich eine öffentliche Methode, um die Liste der Aufgaben im Adapter zu ersetzen. Beim Start der Anwendung werden die Anzahl der Elemente in der programmatisch erzeugten ArrayList und die Task Elemente, die programmatisch hinzugefügt wurden, geloggt.
 
 ### Schritt 5: Liste an Adapter "anschließen"
 
@@ -71,13 +79,13 @@ Referenzieren Sie in der *Activity* das `ListView`-UI-Element und erzeugen Sie e
 
 Verbinden Sie jetzt die losen Enden Ihre Anwendung: Nutzen Sie die vorgegebenen UI-Elemente (EditText und Button), um neue Aufgaben durch die NutzerInnen erstellen zu lassen. Behalten Sie dabei die bereits erprobte Reihenfolge ein:
   1. Die durch die NutzerInnen eingegebene Beschreibung wird an den `TaskManger` übergeben, der eine neue Aufgabe erstellt
-  2. Der Adapter erhält dann die veränderten Liste und informiert im Anschluss das `ListView` (wie in Schritt 4)
+  2. Der Adapter erhält dann die veränderten Liste und informiert im Anschluss das `ListView` (wie in Schritt 5)
   3. Das ListView zeigt nun die neuen Elemente an
 
 **Zwischenziel:** Durch Eingabe eines Texts und Drücken des Buttons kann ein neues Element zum `ListView` hinzugefügt werden. Dieses wird ganz oben in der Liste angezeigt.
 
 ### Schritt 7:
-Auf dem `ListView` registrieren Sie nun einen Listener, der es Ihnen erlaubt lange Klicks auf den Einträgen abzufangen (`setOnItemLongClickListener`). Als Reaktion auf diese *Events* ändern Sie den Status des angeklickten Elements. Sorgen auch hier wieder mittels des Adapters dafür, dass das `ListView` die Veränderungen des Zustands korrekt anzeigt. Dazu muss bei Tasks deren State nicht mehr `OPEN` sondern `CLOSED` ist (inneres Enum `TaskState` in `Task`-Klasse) ein anderes Layout *infaltet* werden. Darüber hinaus sollten diese Tasks an das Ende der Liste (ArrayList oder Manager) sortiert werden, so dass Sie auch ListView am Ende angezeigt werden, dazu kann die `sort`-Methode der `Collections`-Klasse verwendet werden, der die ArrayList übergeben werden muss (da die Tasks das `Comparable`-Interface implementieren, die Sortierlogik ist bereits vorgegeben).
+Auf dem `ListView` registrieren Sie nun einen Listener, der es Ihnen erlaubt lange Klicks auf den Einträgen abzufangen (`setOnItemLongClickListener`). Als Reaktion auf diese *Events* ändern Sie den Status des angeklickten Elements (`OPEN` -> `CLOSED`). Sorgen auch hier wieder mittels des Adapters dafür, dass das `ListView` die Veränderungen des Zustands korrekt anzeigt. Dazu muss bei Tasks deren State nicht mehr `OPEN`, sondern `CLOSED` ist (inneres Enum `TaskState` in `Task`-Klasse) ein anderes Layout *inflatet* werden. Darüber hinaus sollten diese Tasks an das Ende der Liste (ArrayList oder Manager) sortiert werden, so dass Sie auch im `ListView` am Ende angezeigt werden, dazu kann die `sort`-Methode der `Collections`-Klasse verwendet werden, der die ArrayList übergeben werden muss (da die Tasks das `Comparable`-Interface implementieren, die Sortierlogik ist bereits vorgegeben).
 
 **Zwischenziel:** Tasks lassen sich nun durch einen langen Klick als abgeschlossen markieren. Dadurch ändert sich ihr Layout und ihre Position in der Liste.
 
