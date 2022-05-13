@@ -19,33 +19,30 @@
         android:textColor="@color/primary"
         android:text="@string/app_name"/>
 
-    <LinearLayout
-        android:id="@+id/input_elements"
-        android:layout_width="match_parent"
+
+    <EditText
+        android:id="@+id/input_text"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:weightSum="100"
-        app:layout_constraintTop_toBottomOf="@id/app_title_label">
+        android:hint="@string/input_hint"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        app:layout_constraintTop_toBottomOf="@id/app_title_label"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintWidth_percent="0.82"
+        android:layout_margin="10dp"/>
 
-        <EditText
-            android:id="@+id/input_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="90"
-            android:hint="@string/input_hint"
-            android:importantForAutofill="no"
-            android:inputType="text" />
-
-        <Button
-            android:id="@+id/input_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="10"
-            android:backgroundTint="@color/primary"
-            android:textColor="@color/white"
-            android:text="@string/input_button_label" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/input_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/primary"
+        android:textColor="@color/white"
+        android:text="@string/input_button_label"
+        app:layout_constraintLeft_toRightOf="@id/input_text"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_title_label"
+        android:layout_margin="10dp"/>
 
     <ListView
         android:id="@+id/task_list"
@@ -53,7 +50,7 @@
         android:layout_height="0dp"
         android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@id/app_description"
-        app:layout_constraintTop_toBottomOf="@+id/input_elements" />
+        app:layout_constraintTop_toBottomOf="@+id/input_text" />
 
     <TextView
         android:id="@+id/app_description"
