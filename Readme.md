@@ -28,7 +28,7 @@ Versuchen Sie bei der Lösung der Aufgabe bewusst eine **strikte** Trennung zwis
 
 Laden Sie sich das Starterpaket herunter, das Sie links auf dieser Seite finden. Entpacken Sie den Projektordner und öffnen Sie das Projekt in *Android Studio*. Beim ersten Start synchronisiert *Android Studio* die Projektinhalte und installiert ggf. noch fehlende Abhängigkeiten. Im Startercode finden Sie ein rudimentäres Android-Projekt. Neben einem einfachen Layout (`activity_main.xml`) für die zentrale *Activity* der App ist dort auch eine `Task`-Klasse vorgegeben. Nutzen Sie letztere zur internen/logischen Repräsentation von Aufgaben innerhalb Ihrer Anwendung. Die Klasse verfügt  über Methoden zur (tiefen) Kopie einer Aufgabe und implementiert das `Comparable`-*Interface*, dass eine Sortierung mehrerer Aufgaben nach den oben genannten Kriterien erlaubt. Eine sehr einfache Möglicheit zur automatischen Sortierung von Objekten, deren Klassen *[Comparable](https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html)* implementieren, ist die Verwendung der [`Collections.sort`-Methode](https://docs.oracle.com/javase/8/docs/api/java/util/Collections.html#sort-java.util.List-), die eine als Parameter übergebene List *in-place* sortiert und dabei die jeweilige Implementierung der `comparteTo`-Methode verwendet. **Sie müssen/sollten die `Task`-Klasse zur Lösung der Aufgabe nicht verändern.**
 
-**Zwischenziel**: Das Starterpaket sollte sich auf dem Emulator (oder Ihrem physischen Smartphone) fehlerfrei starten lassen.
+**Zwischenziel**: Die im Starterpaket vorgegebene Version der Anwendung lässt sich fehlerfrei auf dem Emulator (oder Ihrem physischen Smartphone) starten.
 
 ### Schritt 1: Interne Aufgaben-Liste
 
